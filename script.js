@@ -214,6 +214,85 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Add search and filter functionality
+    const searchProducts = () => {
+        const searchInput = document.querySelector('.search-input');
+        const filterSelect = document.querySelector('.filter-select');
+        const productCards = document.querySelectorAll('.product-card');
+
+        const searchTerm = searchInput.value.toLowerCase();
+        const filterValue = filterSelect.value;
+
+        productCards.forEach(card => {
+            const title = card.querySelector('h3').textContent.toLowerCase();
+            const price = card.querySelector('.price').textContent;
+            const category = card.dataset.category;
+
+            const matchesSearch = title.includes(searchTerm);
+            const matchesFilter = filterValue === 'all' || category === filterValue;
+
+            card.style.display = matchesSearch && matchesFilter ? 'flex' : 'none';
+        });
+    };
+
+    // Add product sorting
+    const sortProducts = (criteria) => {
+        const productsContainer = document.querySelector('.products-grid');
+        const products = Array.from(productsContainer.children);
+
+        products.sort((a, b) => {
+            if (criteria === 'price-low') {
+                const priceA = parseFloat(a.querySelector('.price').textContent.replace('$', ''));
+                const priceB = parseFloat(b.querySelector('.price').textContent.replace('$', ''));
+                return priceA - priceB;
+            } else if (criteria === 'price-high') {
+                const priceA = parseFloat(a.querySelector('.price').textContent.replace('$', ''));
+                const priceB = parseFloat(b.querySelector('.price').textContent.replace('$', ''));
+                return priceB - priceA;
+            }
+        });
+
+        products.forEach(product => productsContainer.appendChild(product));
+    };
+
+    // Add dark mode toggle
+    const toggleDarkMode = () => {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    };
+
+    // Initialize dark mode from localStorage
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+    }
+
+    // Add smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Add lazy loading for images
+    document.addEventListener('DOMContentLoaded', () => {
+        const images = document.querySelectorAll('img[data-src]');
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.removeAttribute('data-src');
+                    observer.unobserve(img);
+                }
+            });
+        });
+
+        images.forEach(img => imageObserver.observe(img));
+    });
+
     // Start the animation sequence
     startIntroSequence();
 });
