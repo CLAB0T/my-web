@@ -35,6 +35,7 @@ body {
     justify-content: center;
     align-items: center;
     z-index: 1000;
+    animation: fadeOut 1s ease-in-out 2.5s forwards;
 }
 
 .welcome-text {
@@ -46,6 +47,7 @@ body {
     letter-spacing: 0.2em;
     text-align: center;
     padding: 0 20px;
+    animation: slideIn 1s ease-out, fadeOut 1s ease-in-out 2s forwards;
 }
 
 .moral-text {
@@ -56,6 +58,7 @@ body {
     margin-top: 2rem;
     text-align: center;
     padding: 0 20px;
+    animation: slideIn 1s ease-out 0.5s backwards, fadeOut 1s ease-in-out 2s forwards;
 }
 
 /* Navbar Styles */
