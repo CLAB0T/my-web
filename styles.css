@@ -87,6 +87,7 @@ body {
     color: var(--text-color);
     font-weight: bold;
     white-space: nowrap;
+    animation: float 3s ease-in-out infinite;
 }
 
 .navbar a {
@@ -95,10 +96,26 @@ body {
     font-weight: 500;
     transition: color 0.3s ease;
     font-size: clamp(0.9rem, 2vw, 1rem);
+    position: relative;
+}
+
+.navbar a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #ff69b4;
+    transition: width 0.3s ease;
 }
 
 .navbar a:hover {
     color: var(--primary-color);
+}
+
+.navbar a:hover::after {
+    width: 100%;
 }
 
 /* User Profile Styles */
@@ -128,6 +145,11 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.profile-pic:hover img {
+    transform: scale(1.1);
 }
 
 .user-name {
@@ -161,7 +183,7 @@ main {
     border-radius: 10px;
     padding: clamp(1rem, 3vw, 1.5rem);
     box-shadow: var(--shadow);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -169,6 +191,7 @@ main {
 
 .product-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
 .product-card img {
@@ -209,12 +232,14 @@ main {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
     font-size: clamp(0.9rem, 2vw, 1rem);
 }
 
 .buy-btn:hover {
     background-color: #ff4da6;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .title{
@@ -312,6 +337,7 @@ main {
     position: relative;
     cursor: pointer;
     padding: 0.5rem;
+    animation: pulse 1s ease-in-out infinite;
 }
 
 .cart-count {
@@ -435,11 +461,13 @@ main {
     border-radius: 5px;
     cursor: pointer;
     font-size: 1.1rem;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .checkout-btn:hover {
     background-color: #ff4da6;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
 .product-quantity {
@@ -543,5 +571,36 @@ main {
 
     .product-card p {
         color: #aaa;
+    }
+}
+
+/* Modern Animations */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
     }
 }
